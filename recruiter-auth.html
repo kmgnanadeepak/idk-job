@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recruiter Authentication - Smart College Placement Portal</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="recruiter.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <div class="app-gradient-bg"></div>
+
+    <!-- Minimal Logo Section -->
+    <div class="auth-logo-section">
+        <div class="auth-logo">
+            <div class="logo-circle">SC</div>
+            <div class="auth-logo-text">
+                <h1>Smart College</h1>
+                <p>Recruiter Portal</p>
+            </div>
+        </div>
+        <div class="back-to-home">
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Main Authentication Container -->
+    <main class="auth-main">
+        <!-- Login Form -->
+        <div id="recruiterLoginForm" class="auth-container">
+            <div class="auth-card glass-card">
+                <div class="auth-header">
+                    <h2>Recruiter Sign In</h2>
+                    <p>Access your recruitment dashboard</p>
+                </div>
+                
+                <form id="recruiterLoginFormElement" class="auth-form">
+                    <div class="form-group">
+                        <label for="recruiterLoginEmail">Company Email</label>
+                        <input 
+                            type="email" 
+                            id="recruiterLoginEmail" 
+                            placeholder="Enter your company email"
+                            required
+                        />
+                        <span class="form-error"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="recruiterLoginPassword">Password</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="recruiterLoginPassword" 
+                                placeholder="Enter your password"
+                                required
+                            />
+                            <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                👁️
+                            </button>
+                        </div>
+                        <span class="form-error"></span>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="recruiterRememberMe" />
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" id="recruiterForgotPasswordLink" class="forgot-link">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn primary-btn">
+                        <span class="btn-text">Sign In as Recruiter</span>
+                        <span class="btn-loader hidden">⏳</span>
+                    </button>
+                    
+                    <button type="button" id="recruiterGuestLoginBtn" class="auth-btn guest-btn">
+                        <span class="btn-text">Continue as Guest (Recruiter)</span>
+                        <span class="btn-loader hidden">⏳</span>
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>OR</span>
+                    </div>
+                    
+                    <div class="auth-footer">
+                        <p>New to our platform? <a href="#" id="showRecruiterRegisterLink" class="auth-link">Create recruiter account</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="recruiterRegisterForm" class="auth-container hidden">
+            <div class="auth-card glass-card">
+                <div class="auth-header">
+                    <h2>Create Recruiter Account</h2>
+                    <p>Start hiring talented candidates</p>
+                </div>
+                
+                <form id="recruiterRegisterFormElement" class="auth-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recruiterCompanyName">Company Name</label>
+                            <input 
+                                type="text" 
+                                id="recruiterCompanyName" 
+                                placeholder="Enter your company name"
+                                required
+                            />
+                            <span class="form-error"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recruiterRegisterEmail">Company Email</label>
+                            <input 
+                                type="email" 
+                                id="recruiterRegisterEmail" 
+                                placeholder="Enter your company email"
+                                required
+                            />
+                            <span class="form-error"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recruiterFullName">Your Full Name</label>
+                            <input 
+                                type="text" 
+                                id="recruiterFullName" 
+                                placeholder="Enter your full name"
+                                required
+                            />
+                            <span class="form-error"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recruiterDesignation">Designation</label>
+                            <select id="recruiterDesignation" required>
+                                <option value="">Select your designation</option>
+                                <option value="HR Manager">HR Manager</option>
+                                <option value="Technical Recruiter">Technical Recruiter</option>
+                                <option value="Talent Acquisition">Talent Acquisition</option>
+                                <option value="Hiring Manager">Hiring Manager</option>
+                                <option value="CEO/Founder">CEO/Founder</option>
+                                <option value="Team Lead">Team Lead</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span class="form-error"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="recruiterIndustry">Industry</label>
+                        <select id="recruiterIndustry" required>
+                            <option value="">Select your industry</option>
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Education">Education</option>
+                            <option value="Consulting">Consulting</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Startups">Startups</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="form-error"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="recruiterRegisterPassword">Password</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="recruiterRegisterPassword" 
+                                placeholder="Create a strong password"
+                                required
+                            />
+                            <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                👁️
+                            </button>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <span class="strength-text">Password strength</span>
+                        </div>
+                        <span class="form-error"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="recruiterConfirmPassword">Confirm Password</label>
+                        <div class="password-input-wrapper">
+                            <input 
+                                type="password" 
+                                id="recruiterConfirmPassword" 
+                                placeholder="Confirm your password"
+                                required
+                            />
+                            <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                👁️
+                            </button>
+                        </div>
+                        <span class="form-error"></span>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="recruiterAgreeTerms" required />
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" class="auth-link">Terms & Conditions</a> and <a href="#" class="auth-link">Recruiter Agreement</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn primary-btn">
+                        <span class="btn-text">Create Recruiter Account</span>
+                        <span class="btn-loader hidden">⏳</span>
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>OR</span>
+                    </div>
+                    
+                    <div class="auth-footer">
+                        <p>Already have a recruiter account? <a href="#" id="showRecruiterLoginLink" class="auth-link">Sign in</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div id="recruiterForgotPasswordForm" class="auth-container hidden">
+            <div class="auth-card glass-card">
+                <div class="auth-header">
+                    <h2>Reset Recruiter Password</h2>
+                    <p>Enter your company email to receive reset instructions</p>
+                </div>
+                
+                <form id="recruiterForgotPasswordFormElement" class="auth-form">
+                    <div class="form-group">
+                        <label for="recruiterForgotEmail">Company Email</label>
+                        <input 
+                            type="email" 
+                            id="recruiterForgotEmail" 
+                            placeholder="Enter your registered company email"
+                            required
+                        />
+                        <span class="form-error"></span>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn primary-btn">
+                        <span class="btn-text">Send Reset Link</span>
+                        <span class="btn-loader hidden">⏳</span>
+                    </button>
+                    
+                    <div class="auth-footer">
+                        <p>Remember your password? <a href="#" id="recruiterBackToLoginLink" class="auth-link">Back to login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="recruiterToast" class="toast hidden"></div>
+
+    <!-- Scripts -->
+    <script src="recruiter.js"></script>
+</body>
+</html>

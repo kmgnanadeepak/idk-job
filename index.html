@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart College Placement & Job Portal</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  </head>
+  <body>
+    <div class="app-gradient-bg"></div>
+
+    <header class="navbar glass-card">
+      <div class="nav-left">
+        <div class="logo-circle">SC</div>
+        <div class="nav-title">
+          <h1>Smart College</h1>
+          <p>AI Placement & Job Portal</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#jobs">Jobs</a>
+        <a href="#companies">Companies</a>
+        <a href="#resume-analyzer">Resume Analyzer</a>
+        <a href="#training">Training</a>
+        <a href="#applied-jobs">Applied Jobs</a>
+        <a href="#contact">Contact</a>
+        <a href="#" id="logoutBtn" class="auth-link logout-btn">Logout</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="toggle-icon">☾</span>
+      </button>
+      <button class="nav-menu-btn" id="navMenuBtn" aria-label="Toggle navigation menu">
+        ☰
+      </button>
+    </header>
+
+    <main>
+      <!-- Hero & Search -->
+      <section id="home" class="hero-section">
+        <div class="hero-content glass-card">
+          <div class="hero-text">
+            <h2>Find Your <span>Dream Job</span></h2>
+            <p>
+              AI-powered placement portal for smart colleges. Discover curated internships, core
+              roles and IT opportunities tailored to your skills.
+            </p>
+            <div class="search-bar">
+              <input
+                type="text"
+                id="jobSearchInput"
+                placeholder="Search by role, company, skill or location..."
+              />
+              <button id="jobSearchBtn">Search</button>
+            </div>
+            <p class="search-hint">Real-time search across all job listings.</p>
+            <div class="auth-divider">
+              <span>OR</span>
+            </div>
+            <a href="recruiter-auth.html" class="recruiter-login-btn">
+              <span class="btn-icon">💼</span>
+              <span class="btn-text">Recruiter Login</span>
+            </a>
+          </div>
+          <div class="hero-dashboard">
+            <div class="dashboard-card glass-card">
+              <h3>Placement Snapshot</h3>
+              <div class="counters">
+                <div class="counter-item">
+                  <span class="counter-label">Companies Visited</span>
+                  <span class="counter-value" data-target="120">0</span>
+                </div>
+                <div class="counter-item">
+                  <span class="counter-label">Students Placed</span>
+                  <span class="counter-value" data-target="850">0</span>
+                </div>
+                <div class="counter-item">
+                  <span class="counter-label">Highest Package (LPA)</span>
+                  <span class="counter-value" data-target="45">0</span>
+                </div>
+              </div>
+            </div>
+            <div class="dashboard-card glass-card ai-highlight">
+              <h3>AI Resume Analyzer</h3>
+              <p>Upload your resume and let Gemini suggest the best career domain and skills.</p>
+              <a href="#resume-analyzer" class="primary-link">Analyze My Resume</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Job Categories & Listings -->
+      <section id="jobs" class="jobs-section">
+        <div class="section-header glass-card">
+          <h2>Explore Opportunities</h2>
+          <p>Filter by category or search to find the perfect role.</p>
+        </div>
+
+        <div class="job-categories glass-card">
+          <button class="category-tab active" data-category="all">All</button>
+          <button class="category-tab" data-category="it">IT Jobs</button>
+          <button class="category-tab" data-category="core">Core Jobs</button>
+          <button class="category-tab" data-category="internship">Internships</button>
+          <button class="category-tab" data-category="remote">Remote Jobs</button>
+        </div>
+
+        <div id="jobList" class="job-listings"></div>
+      </section>
+
+      <!-- Resume Analyzer -->
+      <section id="resume-analyzer" class="resume-section">
+        <div class="glass-card">
+          <h2>AI Resume Analyzer (Gemini)</h2>
+          <p>
+            Paste your resume text or upload a file. Your data stays in your browser; only the text
+            is sent securely to Gemini for analysis.
+          </p>
+
+          <div class="resume-inputs">
+            <div class="file-upload">
+              <label for="resumeFile" class="file-label">Upload Resume (.txt / .pdf*)</label>
+              <input type="file" id="resumeFile" accept=".txt,.pdf" />
+              <span class="file-hint">For PDFs, plain-text extraction quality may vary.</span>
+            </div>
+            <textarea
+              id="resumeText"
+              placeholder="Or paste your resume text here..."
+              rows="8"
+            ></textarea>
+          </div>
+
+          <button id="analyzeResumeBtn" class="primary-btn">Analyze Resume with Gemini</button>
+          <p id="resumeStatus" class="status-text"></p>
+
+          <div id="resumeResult" class="resume-result hidden">
+            <div class="result-columns">
+              <div class="result-column">
+                <h3>Extracted Skills</h3>
+                <ul id="extractedSkills"></ul>
+              </div>
+              <div class="result-column">
+                <h3>Recommended Missing Skills</h3>
+                <ul id="missingSkills"></ul>
+              </div>
+              <div class="result-column">
+                <h3>Improvement Suggestions</h3>
+                <ul id="improvementSuggestions"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recommended Domain & Jobs (from AI) -->
+      <section id="domain-recommendation" class="domain-section hidden">
+        <div class="glass-card domain-card">
+          <h2>AI Domain Recommendation</h2>
+          <p class="domain-subtitle">
+            Based on your resume, we highlight your best-fit domain and tailored job suggestions.
+          </p>
+          <div class="domain-content">
+            <div class="domain-info">
+              <h3>Best Suited Domain</h3>
+              <p id="recommendedDomain" class="domain-pill">Analyze your resume to see results</p>
+              <div class="score-wrapper">
+                <span class="score-label">Resume Match Score</span>
+                <span id="matchScore" class="score-value">--</span>
+              </div>
+            </div>
+            <div class="domain-jobs">
+              <h3>Recommended Jobs</h3>
+              <div id="recommendedJobs" class="recommended-jobs-list">
+                <p class="placeholder-text">
+                  Run the AI Resume Analyzer to see job recommendations tailored to you.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Applied Jobs -->
+      <section id="applied-jobs" class="applied-section">
+        <div class="glass-card">
+          <h2>Applied Jobs</h2>
+          <p>Track all the roles you have applied for through this portal.</p>
+          <div id="appliedJobsList" class="applied-jobs-list"></div>
+        </div>
+      </section>
+
+      <!-- Training & Courses -->
+      <section id="training" class="training-section">
+        <div class="glass-card">
+          <h2>Training & Courses</h2>
+          <p>Enhance your skills with personalized training programs and certifications.</p>
+          
+          <!-- Training Filters -->
+          <div class="training-filters">
+            <div class="filter-group">
+              <label for="modeFilter">Mode:</label>
+              <select id="modeFilter">
+                <option value="all">All Modes</option>
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="domainFilter">Domain:</label>
+              <select id="domainFilter">
+                <option value="all">All Domains</option>
+                <option value="ai">AI & Machine Learning</option>
+                <option value="web">Web Development</option>
+                <option value="data">Data Science</option>
+                <option value="cloud">Cloud Computing</option>
+                <option value="mobile">Mobile Development</option>
+                <option value="devops">DevOps</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="durationFilter">Duration:</label>
+              <select id="durationFilter">
+                <option value="all">All Durations</option>
+                <option value="short">1-4 weeks</option>
+                <option value="medium">1-3 months</option>
+                <option value="long">3+ months</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="locationFilter">Location:</label>
+              <select id="locationFilter">
+                <option value="all">All Locations</option>
+                <option value="nearby">Nearby (within 50km)</option>
+                <option value="city">Same City</option>
+                <option value="remote">Remote Only</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Training Sections -->
+          <div class="training-content">
+            <!-- Recommended Trainings for You -->
+            <div class="training-category">
+              <h3>Recommended Trainings for You</h3>
+              <p class="category-subtitle">AI-personalized based on your resume analysis</p>
+              <div id="recommendedTrainings" class="training-grid">
+                <div class="training-placeholder">
+                  <p>Analyze your resume to see personalized training recommendations</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Popular Trainings Near You -->
+            <div class="training-category">
+              <h3>Popular Trainings Near You</h3>
+              <p class="category-subtitle">Trending courses in your area</p>
+              <div id="popularTrainings" class="training-grid">
+                <!-- Training cards will be populated by JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Companies Showcase -->
+      <section id="companies" class="companies-section">
+        <div class="glass-card">
+          <h2>Top Recruiting Companies</h2>
+          <div class="companies-grid">
+            <a href="https://careers.google.com" target="_blank" rel="noopener noreferrer" class="company-pill">Google</a>
+            <a href="https://careers.microsoft.com" target="_blank" rel="noopener noreferrer" class="company-pill">Microsoft</a>
+            <a href="https://www.amazon.jobs" target="_blank" rel="noopener noreferrer" class="company-pill">Amazon</a>
+            <a href="https://www.tcs.com/careers" target="_blank" rel="noopener noreferrer" class="company-pill">TCS</a>
+            <a href="https://www.infosys.com/careers" target="_blank" rel="noopener noreferrer" class="company-pill">Infosys</a>
+            <a href="https://www.ril.com/careers" target="_blank" rel="noopener noreferrer" class="company-pill">Reliance</a>
+            <a href="https://www.siemens.com/careers" target="_blank" rel="noopener noreferrer" class="company-pill">Siemens</a>
+            <a href="https://www.goldmansachs.com/careers" target="_blank" rel="noopener noreferrer" class="company-pill">Goldman Sachs</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="contact-section">
+        <div class="glass-card">
+          <h2>Contact Placement Cell</h2>
+          <p>
+            Reach out to the Training & Placement Office for queries related to drives, eligibility
+            or partnerships.
+          </p>
+          <form class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="studentName">Name</label>
+                <input type="text" id="studentName" placeholder="Your full name" />
+              </div>
+              <div class="form-group">
+                <label for="studentEmail">Email</label>
+                <input type="email" id="studentEmail" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="studentBranch">Branch</label>
+                <input type="text" id="studentBranch" placeholder="CSE / ECE / ME / CE ..." />
+              </div>
+              <div class="form-group">
+                <label for="studentYear">Year</label>
+                <select id="studentYear">
+                  <option value="">Select year</option>
+                  <option>2nd Year</option>
+                  <option>3rd Year</option>
+                  <option>4th Year</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="studentMessage">Message</label>
+              <textarea
+                id="studentMessage"
+                rows="3"
+                placeholder="Your query or message..."
+              ></textarea>
+            </div>
+            <button type="button" class="primary-btn">Send Message</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Apply Job Modal -->
+    <div id="applyModal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content glass-card">
+        <button class="modal-close" id="closeModalBtn">&times;</button>
+        <h2>Apply for Job</h2>
+        <p id="modalJobTitle" class="modal-job-title"></p>
+        <form id="applyForm" class="apply-form">
+          <div class="form-group">
+            <label for="applicantName">Full Name</label>
+            <input type="text" id="applicantName" required />
+          </div>
+          <div class="form-group">
+            <label for="applicantEmail">Email</label>
+            <input type="email" id="applicantEmail" required />
+          </div>
+          <div class="form-group">
+            <label for="applicantResume">Upload Resume (PDF / DOC / DOCX)</label>
+            <input type="file" id="applicantResume" accept=".pdf,.doc,.docx" required />
+            <span class="file-hint">Resume upload is required to apply for this job.</span>
+          </div>
+          <button type="submit" class="primary-btn">Submit Application</button>
+          <p id="applyFormStatus" class="status-text"></p>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script>
+      // Authentication check - redirect to auth.html if not logged in
+      (function() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          window.location.href = 'auth.html';
+        }
+      })();
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
